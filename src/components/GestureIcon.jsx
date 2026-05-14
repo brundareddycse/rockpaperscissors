@@ -1,4 +1,9 @@
-import { HandFist, HandPalm, Scissors, Question } from "@phosphor-icons/react";
+import {
+  HandFist,
+  HandPalm,
+  Scissors,
+  Question,
+} from "@phosphor-icons/react";
 
 const ICONS = {
   rock: HandFist,
@@ -12,9 +17,22 @@ const LABELS = {
   scissors: "SCISSORS",
 };
 
-export const GestureIcon = ({ move, size = 96, weight = "duotone", color }) => {
+export const GestureIcon = ({
+  move,
+  size = 96,
+  weight = "duotone",
+  color,
+}) => {
   const Icon = ICONS[move] || Question;
-  return <Icon size={size} weight={weight} color={color} />;
+
+  return (
+    <Icon
+      size={size}
+      weight={weight}
+      color={color}
+    />
+  );
 };
 
-export const gestureLabel = (move) => LABELS[move] || "—";
+export const gestureLabel = (move) =>
+  LABELS[move] || "—";
