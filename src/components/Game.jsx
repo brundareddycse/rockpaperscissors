@@ -372,6 +372,9 @@ export default function Game() {
         <motion.div
           className="bg-[#00E5FF] rounded-3xl border-4 border-[#0F172A] p-2 relative overflow-hidden aspect-[4/3] flex flex-col shadow-[8px_8px_0px_#0F172A]"
         >
+          <div className="absolute top-2 left-3 z-20 bg-white border-2 border-[#0F172A] rounded-full px-3 py-1 font-heading text-xs sm:text-sm font-bold text-[#0F172A] shadow-[2px_2px_0px_#0F172A]">
+  YOU
+</div>
           <video
             ref={videoRef}
             playsInline
