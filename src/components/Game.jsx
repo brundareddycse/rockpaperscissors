@@ -1,12 +1,13 @@
-import { motion, AnimatePresence } from \"framer-motion\";
+import { useEffect, useRef, useState, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Camera,
   CameraSlash,
   ArrowsClockwise,
   Play,
-  Robot, 
+  Robot,
   HandWaving,
-} from \"@phosphor-icons/react\";
+} from "@phosphor-icons/react";
 import {
   loadGestureRecognizer,
   detectGestureFromVideo,
