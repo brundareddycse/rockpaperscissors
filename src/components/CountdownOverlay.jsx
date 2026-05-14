@@ -9,7 +9,7 @@ export default function CountdownOverlay({
   const isShoot = value === "SHOOT!";
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence>
       {value !== null && (
         <motion.div
           key={String(value)}
