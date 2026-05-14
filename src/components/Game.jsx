@@ -147,14 +147,23 @@ export default function Game() {
     setGameState(\"countdown\");
 
     const seq = [3, 2, 1, \"SHOOT!\"];
-    for (const v of seq) {
-      setCountdown(v);
-      if (v === \"SHOOT!\") sfx.shoot();
-      else sfx.tick();
-      // SHOOT! shows briefly then we capture
-      await new Promise((res) => setTimeout(res, v === \"SHOOT!\" ? 450 : 700));
-    }
-    setCountdown(null);
+for (const v of seq) {
+  setCountdown(v);
+
+  if (v === "SHOOT!") {
+    sfx.shoot();
+  } else {
+    sfx.tick();
+  }
+
+  await new Promise((res) =>
+    setTimeout(res, v === "SHOOT!" ? 450 : 700)
+  );
+}
+
+requestAnimationFrame(() => {
+  setCountdown(null);
+});
 
     // Capture the player's gesture at the moment of \"SHOOT!\"
     const captured = lastDetectionRef.current?.move || null;
