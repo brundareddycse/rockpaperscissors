@@ -7,13 +7,11 @@
 body {
   margin: 0;
   font-family: "Nunito", system-ui, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   background: #fdf6e3;
 }
 
 .font-display {
-  font-family: "Anton", Impact, sans-serif;
+  font-family: "Anton", sans-serif;
 }
 
 .font-heading {
