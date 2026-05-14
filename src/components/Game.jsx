@@ -217,9 +217,9 @@ export default function Game() {
       );
     }
 
-    requestAnimationFrame(() => {
-      setCountdown(null);
-    });
+   setTimeout(() => {
+  setCountdown(null);
+}, 50);
 
     const captured =
       lastDetectionRef.current?.move || null;
