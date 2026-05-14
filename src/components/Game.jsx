@@ -576,12 +576,11 @@ export default function Game() {
             <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-6">
         <button
           onClick={playRound}
-          disabled={
-            !camReady ||
-            !modelReady ||
-            inProgress ||
-            gameState === "match_done"
-          }
+         disabled={
+  !camReady ||
+  !modelReady ||
+  gameState === "countdown"
+}
           className="bg-[#39FF14] text-[#0F172A] font-heading text-xl sm:text-2xl px-8 sm:px-12 py-4 sm:py-5 rounded-2xl border-4 border-[#0F172A] shadow-[6px_6px_0px_#0F172A] active:translate-x-[6px] active:translate-y-[6px] active:shadow-none hover:bg-[#2DE010] transition-all uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
         >
           <Play size={26} weight="fill" />
