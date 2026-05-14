@@ -275,8 +275,10 @@ export default function Game() {
         setMatchOpen(true);
       }, 700);
     } else {
-      setGameState("round_done");
-    }
+  setTimeout(() => {
+    setGameState("round_done");
+  }, 300);
+}
   }, [
     camReady,
     modelReady,
