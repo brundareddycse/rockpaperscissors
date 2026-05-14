@@ -185,12 +185,9 @@ export default function Game() {
   const playRound = useCallback(async () => {
     if (!camReady || !modelReady) return;
 
-    if (
-      gameState !== "idle" &&
-      gameState !== "round_done"
-    ) {
-      return;
-    }
+   if (gameState === "countdown") {
+  return;
+}
 
     setPlayerMove(null);
     setAiMove(null);
