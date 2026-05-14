@@ -8,15 +8,18 @@ import {
   Robot,
   HandWaving,
 } from "@phosphor-icons/react";
+
 import {
   loadGestureRecognizer,
   detectGestureFromVideo,
-} from \"../lib/handGesture\";
-import { createSmartAI, judge } from \"../lib/smartAI\";
-import { sfx } from \"../lib/sounds\";
-import { GestureIcon, gestureLabel } from \"./GestureIcon\";
-import CountdownOverlay from \"./CountdownOverlay\";
-import MatchResultModal from \"./MatchResultModal\";
+} from "../lib/handGesture";
+
+import { createSmartAI, judge } from "../lib/smartAI";
+import { sfx } from "../lib/sounds";
+
+import { GestureIcon, gestureLabel } from "./GestureIcon";
+import CountdownOverlay from "./CountdownOverlay";
+import MatchResultModal from "./MatchResultModal";
 
 const ARCADE_BG =
   \"https://static.prod-images.emergentagent.com/jobs/1752c84b-24b9-480f-a948-5f6476a33e45/images/fbb8ea12f538f154f4deb6a1af8bb0ae256523ec299a13cf359d658f6c4807f4.png\";
