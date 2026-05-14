@@ -185,7 +185,11 @@ export default function Game() {
   const playRound = useCallback(async () => {
     if (!camReady || !modelReady) return;
 
-   if (gameState === "countdown") {
+  if (
+  gameState === "countdown" ||
+  playerScore >= 5 ||
+  aiScore >= 5
+) {
   return;
 }
 
