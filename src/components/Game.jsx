@@ -260,10 +260,7 @@ export default function Game() {
       sfx.tie();
     }
 
-    if (
-      newPlayer >= WIN_THRESHOLD ||
-      newAi >= WIN_THRESHOLD
-    ) {
+   if (newPlayer >= 5 || newAi >= 5){
       setGameState("match_done");
 
       setMatchDidWin(newPlayer > newAi);
