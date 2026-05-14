@@ -264,15 +264,16 @@ export default function Game() {
       sfx.tie();
     }
 
-   if (newPlayer >= 5 || newAi >= 5){
-      setGameState("match_done");
+  if (newPlayer >= 5 || newAi >= 5) {
+  setGameState("match_done");
 
-      setMatchDidWin(newPlayer > newAi);
+  setMatchDidWin(newPlayer > newAi);
 
-      setTimeout(() => {
-        setMatchOpen(true);
-      }, 700);
-    } else {
+  setTimeout(() => {
+    setMatchOpen(true);
+  }, 700);
+
+} else {
   setTimeout(() => {
     setGameState("round_done");
   }, 300);
