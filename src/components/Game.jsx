@@ -54,6 +54,9 @@ export default function Game() {
   const [playerScore, setPlayerScore] = useState(0);
   const [aiScore, setAiScore] = useState(0);
 
+  const [matchOpen, setMatchOpen] = useState(false);
+  const [matchDidWin, setMatchDidWin] = useState(false);
+
   useEffect(() => {
     let mounted = true;
 
@@ -179,3 +182,164 @@ export default function Game() {
       }
     };
   }, [camReady, modelReady]);
+
+  const playRound = useCallback(async () => {
+    if (!camReady || !modelReady) return;
+
+    if (
+      gameState !== "idle" &&
+      gameState !== "round_done"
+    ) {
+      return;
+    }
+
+    setPlayerMove(null);
+    setAiMove(null);
+    setRoundResult(null);
+
+    setGameState("countdown");
+
+    const seq = [3, 2, 1, "SHOOT!"];
+
+    for (const v of seq) {
+      setCountdown(v);
+
+      if (v === "SHOOT!") {
+        sfx.shoot();
+      } else {
+        sfx.tick();
+      }
+
+      await new Promise((res) =>
+        setTimeout(
+          res,
+          v === "SHOOT!" ? 450 : 700
+        )
+      );
+    }
+
+    setCountdown(null);
+
+    const captured =
+      lastDetectionRef.current?.move || null;
+
+    const pMove = captured;
+
+    const aMove = aiRef.current.predict();
+
+    setGameState("reveal");
+
+    setAiMove(aMove);
+    setPlayerMove(pMove);
+
+    let result;
+
+    if (!pMove) {
+      result = "no_detect";
+    } else {
+      result = judge(pMove, aMove);
+      aiRef.current.record(pMove);
+    }
+
+    await new Promise((res) =>
+      setTimeout(res, 500)
+    );
+
+    setRoundResult(result);
+
+    let newPlayer = playerScore;
+    let newAi = aiScore;
+
+    if (result === "win") {
+      newPlayer += 1;
+      setPlayerScore(newPlayer);
+      sfx.win();
+    } else if (result === "lose") {
+      newAi += 1;
+      setAiScore(newAi);
+      sfx.lose();
+    } else {
+      sfx.tie();
+    }
+
+    if (
+      newPlayer >= WIN_THRESHOLD ||
+      newAi >= WIN_THRESHOLD
+    ) {
+      setGameState("match_done");
+
+      setMatchDidWin(newPlayer > newAi);
+
+      setTimeout(() => {
+        setMatchOpen(true);
+      }, 700);
+    } else {
+      setGameState("round_done");
+    }
+  }, [
+    camReady,
+    modelReady,
+    gameState,
+    playerScore,
+    aiScore,
+  ]);
+
+  const resetMatch = useCallback(() => {
+    setPlayerScore(0);
+    setAiScore(0);
+
+    setPlayerMove(null);
+    setAiMove(null);
+
+    setRoundResult(null);
+
+    setMatchOpen(false);
+
+    setGameState("idle");
+
+    aiRef.current.reset();
+  }, []);
+
+  const inProgress =
+    gameState === "countdown" ||
+    gameState === "reveal";
+
+  return (
+    <div
+      className="min-h-screen w-full flex flex-col items-center p-4 md:p-8 font-body relative"
+      style={{
+        backgroundColor: "#FDF6E3",
+        backgroundImage: `linear-gradient(rgba(253,246,227,0.65), rgba(253,246,227,0.65)), url(${ARCADE_BG})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <div className="w-full max-w-5xl flex items-center justify-between mb-4 mt-1">
+        <h1
+          className="font-display text-3xl sm:text-5xl tracking-tight uppercase text-[#0F172A]"
+          style={{ textShadow: "3px 3px 0 #FFD700" }}
+        >
+          <span className="text-[#FF2A5F]">
+            Rock
+          </span>{" "}
+          Paper{" "}
+          <span className="text-[#00B8D4]">
+            Scissors
+          </span>
+        </h1>
+
+        <div className="hidden sm:flex items-center gap-2 bg-white border-4 border-[#0F172A] rounded-full px-4 py-2 shadow-[4px_4px_0px_#0F172A]">
+          <HandWaving
+            size={22}
+            weight="duotone"
+            color="#FF2A5F"
+          />
+
+          <span className="font-heading font-bold text-[#0F172A]">
+            AI Vision Arcade
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
